@@ -457,7 +457,8 @@ char *yytext;
 #line 1 "calc.lex"
 #line 2 "calc.lex"
    int currLine = 1, currPos = 1;
-#line 461 "calc.c"
+   int numInt = 0, numOp = 5, numParen = 0, numEqal = 0;
+#line 462 "calc.c"
 
 #define INITIAL 0
 
@@ -639,10 +640,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 7 "calc.lex"
+#line 8 "calc.lex"
 
 
-#line 646 "calc.c"
+#line 647 "calc.c"
 
 	if ( !(yy_init) )
 		{
@@ -727,66 +728,66 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 9 "calc.lex"
-{printf("MINUS\n"); currPos += yyleng;}
+#line 10 "calc.lex"
+{printf("MINUS\n"); currPos += yyleng; numOp++;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 10 "calc.lex"
-{printf("PLUS\n"); currPos += yyleng;}
+#line 11 "calc.lex"
+{printf("PLUS\n"); currPos += yyleng; numOp++;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 11 "calc.lex"
-{printf("MULT\n"); currPos += yyleng;}
+#line 12 "calc.lex"
+{printf("MULT\n"); currPos += yyleng; numOp++;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 12 "calc.lex"
-{printf("DIV\n"); currPos += yyleng;}
+#line 13 "calc.lex"
+{printf("DIV\n"); currPos += yyleng; numOp++;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 13 "calc.lex"
-{printf("EQUAL\n"); currPos += yyleng;}
+#line 14 "calc.lex"
+{printf("EQUAL\n"); currPos += yyleng; numEqal++;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 14 "calc.lex"
-{printf("L_PAREN\n"); currPos += yyleng;}
+#line 15 "calc.lex"
+{printf("L_PAREN\n"); currPos += yyleng; numParen++;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 15 "calc.lex"
-{printf("R_PAREN\n"); currPos += yyleng;}
+#line 16 "calc.lex"
+{printf("R_PAREN\n"); currPos += yyleng; numParen++;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 17 "calc.lex"
-{printf("NUMBER %s\n", yytext); currPos += yyleng;}
+#line 18 "calc.lex"
+{printf("NUMBER %s\n", yytext); currPos += yyleng; numInt++;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 19 "calc.lex"
+#line 20 "calc.lex"
 {/* ignore spaces */ currPos += yyleng;}
 	YY_BREAK
 case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
-#line 21 "calc.lex"
+#line 22 "calc.lex"
 {currLine++; currPos = 1;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 23 "calc.lex"
+#line 24 "calc.lex"
 {printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", currLine, currPos, yytext); exit(0);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 25 "calc.lex"
+#line 26 "calc.lex"
 ECHO;
 	YY_BREAK
-#line 790 "calc.c"
+#line 791 "calc.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1780,7 +1781,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 25 "calc.lex"
+#line 26 "calc.lex"
 
 
 
@@ -1788,10 +1789,16 @@ int main(int argc, char ** argv)
 {
    char fname[100];
    printf("\nEnter file name\n");
+   printf("If file does not exit, press enter twice\n");
    scanf("%s", fname);
    yyin = fopen(fname, "r+");
   
-
    yylex();
+
+   printf("\nNum of Ints: %d", numInt);
+   printf("\nNum of Operators: %d", numOp);
+   printf("\nNum of Parenthesis: %d", numParen);
+   printf("\nNum of Equals: %d: \n", numEqal);
+   
 }
 
