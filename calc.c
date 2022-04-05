@@ -1786,6 +1786,12 @@ void yyfree (void * ptr )
 
 int main(int argc, char ** argv)
 {
+   char fname[100];
+   printf("\nEnter file name\n");
+   scanf("%s", fname);
+   yyin = fopen(fname, "r+");
+  
+
    yylex();
 }
 
