@@ -1,6 +1,6 @@
 %{   
    int currLine = 1, currPos = 1;
-   int numInt = 0, numOp = 5, numParen = 0, numEqal = 0;
+   int numInt = 0, numOp = 0, numParen = 0, numEqal = 0;
 %}
 
 DIGIT    [0-9]
@@ -15,7 +15,8 @@ DIGIT    [0-9]
 "("            {printf("L_PAREN\n"); currPos += yyleng; numParen++;}
 ")"            {printf("R_PAREN\n"); currPos += yyleng; numParen++;}
 
-{DIGIT}+       {printf("NUMBER %s\n", yytext); currPos += yyleng; numInt++;}
+(\.{DIGIT}+)|({DIGIT}+(\.{DIGIT}*)?([eE][+-]?[0-9]+)?)       {printf("NUMBER %s\n", yytext); currPos += yyleng; numInt++;}
+
 
 [ \t]+         {/* ignore spaces */ currPos += yyleng;}
 
